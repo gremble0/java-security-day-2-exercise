@@ -3,6 +3,8 @@ package com.booleanuk.api.generic;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
     import org.springframework.web.server.ResponseStatusException;
 
@@ -28,6 +30,7 @@ abstract public class GenericController<Entity extends GenericEntity<Entity>> {
   }
 
   @PostMapping
+  @Secured("admin")
   public ResponseEntity<Entity> post(@RequestBody Entity entity) {
     try {
       return ResponseEntity.status(HttpStatus.CREATED).body(this.repository.save(entity));
@@ -37,6 +40,7 @@ abstract public class GenericController<Entity extends GenericEntity<Entity>> {
   }
 
   @PutMapping(value = "{id}")
+  @Secured("admin")
   public ResponseEntity<Entity> put(@PathVariable int id, @RequestBody Entity entity) {
     return this.repository.findById(id).map(existing -> {
       existing.update(entity);
@@ -45,6 +49,7 @@ abstract public class GenericController<Entity extends GenericEntity<Entity>> {
   }
 
   @DeleteMapping(value = "{id}")
+  @Secured("admin")
   public ResponseEntity<Entity> delete(@PathVariable int id) {
     var existing = this.repository.findById(id);
     if (existing.isEmpty())
