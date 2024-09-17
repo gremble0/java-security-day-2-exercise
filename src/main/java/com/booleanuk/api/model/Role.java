@@ -1,4 +1,4 @@
-package com.booleanuk.api;
+package com.booleanuk.api.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
