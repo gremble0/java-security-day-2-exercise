@@ -1,4 +1,4 @@
-package com.booleanuk.library.config;
+package com.booleanuk.library.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
