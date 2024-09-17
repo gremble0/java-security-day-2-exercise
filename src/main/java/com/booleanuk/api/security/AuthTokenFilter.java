@@ -1,4 +1,4 @@
-package com.booleanuk.library.security;
+package com.booleanuk.api.security;
 
 import com.booleanuk.library.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;

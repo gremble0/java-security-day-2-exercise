@@ -1,4 +1,4 @@
-package com.booleanuk.library.security;
+package com.booleanuk.api.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

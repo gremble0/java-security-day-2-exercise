@@ -8,7 +8,7 @@ import com.booleanuk.api.repository.RoleRepository;
 import com.booleanuk.api.repository.UserRepository;
 import com.booleanuk.api.response.JwtResponse;
 import com.booleanuk.api.response.MessageResponse;
-import com.booleanuk.library.security.JwtUtils;
+import com.booleanuk.api.security.JwtUtils;
 import com.booleanuk.library.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class AuthController {
   private JwtUtils jwtUtils;
 
   @PostMapping("/signin")
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     // If using a salt for password use it here
     Authentication authentication = authenticationManager
         .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -61,7 +61,7 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
+  public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
     if (userRepository.existsByUsername(signupRequest.getUsername())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken"));
     }
@@ -96,6 +96,6 @@ public class AuthController {
     }
     user.setRoles(roles);
     userRepository.save(user);
-    return ResponseEntity.ok((new MessageResponse("User registered successfully")));
+    return ResponseEntity.ok(new MessageResponse("User registered successfully"));
   }
 }
